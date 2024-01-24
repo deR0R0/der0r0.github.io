@@ -10,7 +10,42 @@
     gtag('js', new Date());
     gtag('config', 'G-MY7LBNMN5P');
 
-    //Rest of code
+    //side menu bar
+    function checkMenuBar() {
+        barWidth = document.getElementById("barNavigator").offsetWidth;
+        if (barWidth == 0) {
+            return true
+        } else {
+            return false
+        }
+    }
+    function menuBar() {
+        const menuBar = document.getElementById("barNavigator");
+        const exitSideBarButton = document.getElementById("exitMenu");
+        const windowSize = window.innerHeight;
+        var barHeight = windowSize - 30;
+        menuBar.style.height = String(barHeight + "px");
+        if (checkMenuBar()) {
+            menuBar.style.width = "285px";
+            menuBar.style.border = "solid white 3px";
+            menuBar.style.borderRadius = "20px";
+            setTimeout(function() {
+                exitSideBarButton.style.opacity = "100";
+            }, 500);
+        } else {
+            menuBar.style.width = "0px";
+            menuBar.style.border = "solid white 0px";
+            menuBar.style.borderRadius = "20px";
+            exitSideBarButton.style.opacity = "0";
+        }
+    }
+    //Redirects
+    function LCredirect() {
+        window.location.assign("./mods/lethalcompany/index.html");
+    }
+
+
+
 </script>
 
 
@@ -65,7 +100,7 @@ body {
     75% {transform: translateX(-25%);}
     100% {transform: translateX(1);}
 }
-
+/*Animations*/
 
 
 
@@ -88,12 +123,52 @@ body {
     /*Make the text slightly larger on hover*/
     font-size: 23px;
 }
-
+/*Github Stuff*/
 #github {
     position: absolute;
     top: 25px;
     left: 80px;
 }
+/*Menu Bar*/
+#menu {
+    position: absolute;
+    top: 25px;
+    left: 15px;
+    background-color: rgba(0, 0, 0, 0);
+    border: none;
+}
+#barNavigator {
+    /*Positioning + Sizing*/
+    position: fixed;
+    top: 10px;
+    left: 10px;
+    width: 0px;
+    height: 620px;
+    /*Style*/
+    background-color: rgba(0, 0, 0, 0.90);
+    border: solid white 0px;
+    border-radius: 20px;
+    transition: 0.5s;
+}
+#exitMenu {
+    /*Positioning + Sizing*/
+    margin-left: 240px;
+    font-size: 50px;
+    /*Style*/
+    background-color: rgba(0, 0, 0, 0);
+    color: red;
+    border: none;
+    opacity: 0;
+}
+/*Mods*/
+.mods {
+    text-align: center;
+    margin: auto;
+    border: dotted black 3px;
+    width: 200px;
+    height: 100px;
+}
+
 
 
 
@@ -113,21 +188,44 @@ body {
     <meta charset="UTF-8">
     <div class="header">
         <h1 id="title">Universe</h1>
-        
     </div>
-    <a id="github" href="https://github.com"><img src="./assets/images/github.png" width=50 alt="github logo"></a>
+        
 </head>
 
 
 <body>
+    
     <!--Waves-->
     <div>
         <div class="wave"></div>
         <div class="wave"></div>
         <div class="wave"></div>
-     </div>
-     <!--Waves End-->
+    </div>
+    <!--Github-->
+    <div class="githubStuff">
+        <a id="github" href="https://github.com/deR0R0/der0r0.github.io"><img src="./assets/images/github.png" width=50 alt="github logo"></a>
+        <button onclick="menuBar()" id="menu"><img src="./assets/images/menubar.png" alt="menu bar icon", width=50></button>
+        <div id="barNavigator">
+            <button onclick="menuBar()" id="exitMenu">X</button>
+        </div>
+    </div>
+    <!--Redirects-->
+    <br>
+    <br>
+    <br>
+    <div class="redirects">
+        <div class="mods">
+            <h2>Mods</h2>
+            <button onclick="LCredirect()" id="LCmods">Lethal Company</button>
+        </div>
+    </div>
+
+
+
+
+
 </body>
+
 
 
 </html>
