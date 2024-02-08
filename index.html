@@ -10,6 +10,15 @@
     gtag('js', new Date());
     gtag('config', 'G-MY7LBNMN5P');
 
+    //fix stuff
+    function fixElements() {
+        var windowHeight = window.innerHeight;
+        var windowWidth = window.innerWidth;
+
+
+        
+    }
+
     //side menu bar
     function checkMenuBar() {
         barWidth = document.getElementById("barNavigator").offsetWidth;
@@ -22,6 +31,7 @@
     function menuBar() {
         const menuBar = document.getElementById("barNavigator");
         const exitSideBarButton = document.getElementById("exitMenu");
+        const geo = document.getElementById("geo");
         const windowSize = window.innerHeight;
         var barHeight = windowSize - 30;
         menuBar.style.height = String(barHeight + "px");
@@ -31,17 +41,19 @@
             menuBar.style.borderRadius = "20px";
             setTimeout(function() {
                 exitSideBarButton.style.opacity = "100";
+                geo.style.opacity = "100";
             }, 500);
         } else {
             menuBar.style.width = "0px";
             menuBar.style.border = "solid white 0px";
             menuBar.style.borderRadius = "20px";
             exitSideBarButton.style.opacity = "0";
+            geo.style.opacity = "0";
         }
     }
     //Redirects
-    function LCredirect() {
-        window.location.assign("./mods/lethalcompany/index.html");
+    function redirect(url) {
+        window.location.assign(url);
     }
 
 
@@ -103,7 +115,7 @@ body {
 /*Animations*/
 
 
-
+/*Hide elemts*/
 .header {
     /*For head text*/
     font-family: 'Roboto', sans-serif;
@@ -136,6 +148,17 @@ body {
     left: 15px;
     background-color: rgba(0, 0, 0, 0);
     border: none;
+    transition: 0.5s;
+}
+#menu:hover {
+    left: 13px;
+    top: 23px;
+}
+#menuImg {
+    transition: 0.5s;
+}
+#menu:hover #menuImg {
+    width: 55px;
 }
 #barNavigator {
     /*Positioning + Sizing*/
@@ -160,13 +183,82 @@ body {
     border: none;
     opacity: 0;
 }
+#geo {
+    width: 100%;
+    margin-left: 90px;
+    margin-bottom: 20px;
+    bottom: 0;
+    position: fixed;
+    color: white;
+    opacity: 0;
+    font-family: 'Roboto' sans-serif;
+}
 /*Mods*/
 .mods {
     text-align: center;
     margin: auto;
     border: dotted black 3px;
+    width: 230px;
+    height: auto;
+    border-radius: 20px;
+}
+#LCmods {
+    font-family: 'Roboto', sans-serif;
+    border: solid red 3px;
+    border-radius: 15px;    
+    color: white;
+    background-color: red;
+    cursor: pointer;
+    font-size: 17px;
+    margin: 10px;
+    padding: .5em;
+    transition: 0.5s;
     width: 200px;
-    height: 100px;
+    height: 40px;
+}
+#LCmods:hover {
+    border-radius: 5px;
+    width: 205px;
+    height: 45px;
+    font-size: 19px;
+    margin: 7.8px;
+}
+/*Projects*/
+.projects {
+    text-align: center;
+    margin: auto;
+    border: dotted black 3px;
+    width: 230px;
+    height: auto;
+    border-radius: 20px;
+}
+#login {
+    font-family: 'Roboto', sans-serif;
+    border: solid red 3px;
+    border-radius: 15px;    
+    color: white;
+    background-color: red;
+    cursor: pointer;
+    font-size: 17px;
+    margin: 10px;
+    padding: .5em;
+    transition: 0.5s;
+    width: 200px;
+    height: 40px;
+}
+#login:hover {
+    border-radius: 5px;
+    width: 205px;
+    height: 45px;
+    font-size: 19px;
+    margin: 7.8px;
+}
+/*watermark*/
+#watermark {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
 }
 
 
@@ -193,7 +285,7 @@ body {
 </head>
 
 
-<body>
+<body onload="fixElements()">
     
     <!--Waves-->
     <div>
@@ -204,9 +296,12 @@ body {
     <!--Github-->
     <div class="githubStuff">
         <a id="github" href="https://github.com/deR0R0/der0r0.github.io"><img src="./assets/images/github.png" width=50 alt="github logo"></a>
-        <button onclick="menuBar()" id="menu"><img src="./assets/images/menubar.png" alt="menu bar icon", width=50></button>
+        <button onclick="menuBar()" id="menu"><img id="menuImg" src="./assets/images/menubar.png" alt="menu bar icon", width=50></button>
         <div id="barNavigator">
-            <button onclick="menuBar()" id="exitMenu">X</button>
+            <div class="hideElements">
+                <button onclick="menuBar()" id="exitMenu">X</button>
+                <p id="geo">Geo is kewl</p>
+            </div>
         </div>
     </div>
     <!--Redirects-->
@@ -214,11 +309,21 @@ body {
     <br>
     <br>
     <div class="redirects">
+        <div class="projects">
+            <h2>Projects</h2>
+            <button onclick="redirect('./login/index.html')" id="login">Login</button>
+        </div>
+        <br>
+        <br>
+        <br>
         <div class="mods">
             <h2>Mods</h2>
-            <button onclick="LCredirect()" id="LCmods">Lethal Company</button>
+            <button onclick="redirect('./mods/lethalcompany/index.html')" id="LCmods">Lethal Company</button>
         </div>
     </div>
+
+
+    <p id="watermark">Made with 💖 by Roro</p>
 
 
 

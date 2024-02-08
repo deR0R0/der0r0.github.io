@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html>
+    <script>
+        //lockout
+        var currentDate = new Date();
+        var currentTime = String(currentDate.getHours()) + String(currentDate.getMinutes()) + String(currentDate.getSeconds());
+        var attempts = 0;
+        //Extra vars
+        var pos = null;
+        //Usernames and Passwords are stored locally... no money for database yet :D
+        var encodedUsernames = ["RWJlYg==", "RnhsbHF2eg==", "a0d2ZHJlbQ==", "emJheHJs"];
+        var encodedPasswords = ["RWJlYnZmWHJqeQ==", "UWJ0MTIzIQ==", "RzF0M2UyOCE=", "VG5oZ256dmZuWmJheHJsNDIwIQ=="];
+        //Javascript really should have rot13 built in...
+        function rot13(message) {
+            return message.replace(/[a-z]/gi, letter => String.fromCharCode(letter.charCodeAt(0) + (letter.toLowerCase() <= 'm' ? 13 : -13)));
+        } 
+
+        function fixElements() {
+            const img = document.getElementById("sideImg");
+            const usernameBox = document.getElementById("username");
+            const passwordBox = document.getElementById("password");
+            var screenWidth = window.innerWidth;
+            var screenHeight = window.innerHeight;
+            img.style.width = String(screenWidth-400 + "px");
+            img.style.height = String(screenHeight + "px");
+
+            usernameBox.focus();
+            usernameBox.addEventListener('keypress', function(button) {
+                if(button.key === 'Enter') {
+                    document.getElementById("usernameButton").click();
+                }
+            });
+            passwordBox.addEventListener('keypress', function(button) {
+                if(button.key === 'Enter') {
+                    document.getElementById("loginButton").click();
+                }
+            });
+        }
+
+        //*note to self, PLEASE FIX THE ATTEMPTING SYSTEM PLEASEEEEEEEE
+        function checkUsername() {
+            const ucontainer = document.getElementById("username-container");
+            const pcontainer = document.getElementById("password-container");
+            const usernameButton = document.getElementById("usernameButton");
+            const loginButton = document.getElementById("loginButton");
+            var usernameInput = document.getElementById("username").value;
+            var usernameInputEncoded = btoa(rot13(usernameInput));
+            if(localStorage.getItem("lockoutTime") == null) {
+                if(attempts < 6) {
+                    if(localStorage.getItem("lockoutTime") == null) {
+                        if(usernameInput == "clearLockout") {
+                            localStorage.clear();
+                        }
+                        if(encodedUsernames.includes(usernameInputEncoded)) {
+                            pos = encodedUsernames.indexOf(usernameInputEncoded);
+                            ucontainer.style.animation = "containerSlideOut 0.8s 1";
+                            pcontainer.style.animation = "containerSlideIn 0.8s 1";
+                            pcontainer.style.left = "1030px";
+                            loginButton.style.left = "1030px";
+                            loginButton.style.opacity = "100%";
+                            loginButton.style.animation = "buttonSlideIn 0.8s 1";
+                            usernameButton.style.animation = "arrowSlideOut 0.8 1";
+                            setTimeout(function() {
+                                ucontainer.style.animation = "";
+                                pcontainer.style.animation = "";
+                                loginButton.style.animation = "";
+                                usernameButton.style.animation = "";
+                                ucontainer.style.opacity = "0%";
+                                pcontainer.style.opacity = "100%";
+                                usernameButton.style.opacity = "0%";
+                                document.getElementById("password").focus();
+                            }, 800);
+                        } else {
+                            attempts = attempts + 1;
+                            ucontainer.style.animation = "incorrect 0.8s 1";
+                            setTimeout(function() {
+                                ucontainer.style.animation = "";
+                                document.getElementById("username").value = "";
+                            }, 800);
+                        }
+                    } else {
+                        if(localStorage.getItem("lockoutTime") - getCurrentTime() <= 0) {
+                            localStorage.clear();
+                            attempts = 0;
+                        } else {
+                            attempts = 999;
+                        }
+                    }
+
+                } else {
+                    if(document.getElementById("username").value == "clearLockout") {
+                        localStorage.clear();
+                        document.getElementById("username").value = "";
+                        attempts = 0;
+                        alert("Successfully Cleared Lockout!");
+                    } else {
+                        timeUnlock = localStorage.getItem("lockoutTime");
+                        if(timeUnlock == null) {
+                            var unlockedTime = parseInt(getCurrentTime()) + 20;
+                            localStorage.setItem("lockoutTime", unlockedTime);
+                        } else {
+                            var currentcureenttime = getCurrentTime();
+                            document.getElementById("usernameStatus").style.opacity = "100%";
+                            document.getElementById("usernameStatus").innerHTML = "Locked out for " + String(localStorage.getItem("lockoutTime") - getCurrentTime()) +  " seconds!"
+                            if(currentcureenttime - timeUnlock <= 0) {
+                                localStorage.clear();
+                                attempts = 0;
+                            }
+                        }
+                        ucontainer.style.animation = "lockedOut 0.6s 1";
+                        setTimeout(function() {
+                            ucontainer.style.animation = "";
+                            document.getElementById("username").value = "";
+                        }, 500);
+                    }   
+                }
+            } else {
+
+            }
+        }
+
+        function getCurrentTime() {
+            currentTime = String(currentDate.getHours()) + String(currentDate.getMinutes()) + String(currentDate.getSeconds());
+            return currentTime;
+        }
+
+        function checkPassword() {
+            const pcontainer = document.getElementById("password-container");
+            const loginButton = document.getElementById("loginButton");
+            var passwordInput = document.getElementById("password").value;
+            var passwordInputEncoded = btoa(rot13(passwordInput));
+            if(passwordInputEncoded == encodedPasswords[pos]) {
+                pcontainer.style.visibility = "hidden";
+                loginButton.style.opacity = "0%";
+                loginButton.style.transition = "0s";
+                generateCookie();
+            } else {
+                pcontainer.style.animation = "incorrect 0.8s 1";
+                setTimeout(function() {
+                    pcontainer.style.animation = "";
+                    document.getElementById("password").value = "";
+                }, 800);
+            }
+
+        }
+        //Using sessionstorage, easiest cookie method.
+        function generateCookie() {
+            const status = document.getElementById("loaderStatus");
+            var cookieID = "";
+            document.getElementById("loader").style.visibility = "visible";
+            status.style.visibility = "visible";
+            setTimeout(function() {
+                status.innerHTML = "Verifying...";
+                status.style.left = "1085px";
+                for(let i=0; i<5; i++) {
+                    cookieID = cookieID + Math.floor(Math.random() * 10);
+                }
+                setTimeout(function() {
+                    status.innerHTML = "Logging you in...";
+                    status.style.left = "1055px";
+                    cookieID = cookieID + String(2102009);
+
+                    setTimeout(function() {
+                        status.innerHTML = "Setting Cookie...";
+                        for(let i=0; i<5; i++) {
+                            cookieID = cookieID + Math.floor(Math.random() * 10);
+                        }
+                        setTimeout(function() {
+                            status.style.left = "1105px";
+                            status.innerHTML = "Done!";
+                            setTimeout(function() {
+                                sessionStorage.setItem("cookie", cookieID);
+                                sessionStorage.setItem("name", encodedUsernames[pos]);
+                                setTimeout(function() {
+                                    redirect("../content/index.html");
+                                }, 4000)
+                            }, 1000);
+                        }, 1000);
+                    }, 1000);
+                }, 1000);
+            }, 1000);
+        }
+
+        function redirect(url) {
+            window.location.assign(url);
+        }
+
+
+    </script>
+
+    <style>
+        /*Roboto Font*/
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;500&display=swap');
+        /*Nunito font*/
+        @import url('https://fonts.googleapis.com/css2?family=Nunito&display=swap');
+        /*animations*/
+        @keyframes incorrect {
+            0% {left: 1030px; border-color: white; color: white}
+            33% {left: 1000px; border-color: red; color: red}
+            66% {left: 1060px; border-color: red; color: red}
+            100% {left: 1030; border-color: white; color: white}
+        }
+        @keyframes lockedOut {
+            0% {left: 1030px; border-color: white; color: white}
+            33% {left: 1000px; border-color: rgb(105, 0, 0); color: rgb(105, 0, 0)}
+            66% {left: 1060px; border-color: rgb(105, 0, 0); color: rgb(105, 0, 0)}
+            100% {left: 1030; border-color: white; color: white}
+        }
+        @keyframes containerSlideOut {
+            0% {left: 1030px; opacity: 100%; color: lightgreen; border-color: lightgreen}
+            100% {left: 970px; opacity: 0%; color: lightgreen; border-color: lightgreen}
+        }
+        @keyframes containerSlideIn {
+            0% {left: 1090px; opacity: 0%}
+            100% {left: 1030px; opacity: 100%}
+        }
+        @keyframes arrowSlideOut {
+            0% {left: 1120px; opacity: 100%}
+            100% {left:1280px; opacity: 0%}
+        }
+        @keyframes buttonSlideIn {
+            0% {left: 930px; opacity: 0%}
+            100% {left: 1030px; opacity: 100%}
+        }
+        #title {
+            margin-top: 90px;
+            margin-right: 200px;
+            text-align: right;
+            font-weight: bold;
+            color: white;
+            font-size: 50px;
+        }
+        #title-message {
+            margin-top: -20px;
+            margin-right: 190px;
+            text-align: right;
+            color: white;
+            font-weight: 5;
+            font-size: 20px;
+        }
+        body {
+            background-image: linear-gradient(to right, purple, black);
+            font-family: 'Roboto', sans-serif;
+        }
+        #sideImg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            box-shadow: rgba(128, 0, 128, 0.25) 0px 54px 55px, rgba(128, 0, 128, 0.12) 0px -12px 30px, rgba(128, 0, 128, 0.12) 0px 4px 6px, rgba(128, 0, 128, 0.17) 0px 12px 13px, rgba(128, 0, 128, 0.09) 0px -3px 5px;
+        }
+        #username-container {
+            position: absolute;
+            color: white;
+            left: 1030px;
+            top: 250px;
+            width: 200px;
+            height: 50px;
+            border-radius: 20px;
+            border-color: white;
+            /*animation: containerSlideIn 0.8s infinite;*/
+        }
+        #username {
+            background-color: rgba(0,0,0,0);
+            border: none;
+            color: white;
+            height: 30px;
+            font-family: 'Nunito', sans-serif;
+            font-size: 20px;
+        }
+        #username:focus {
+            outline: none;
+        }
+
+        #password-container {
+            position: absolute;
+            color: white;
+            left: 830px;
+            top: 250px;
+            width: 200px;
+            height: 50px;
+            border-color: white;
+            border-radius: 20px;
+            opacity: 0%;
+        }
+        #password {
+            background-color: rgba(0,0,0,0);
+            border: none;
+            color: white;
+            height: 30px;
+            font-family: 'Nunito', sans-serif;
+            font-size: 20px;
+        }
+        #password:focus {
+            outline: none;
+        }
+
+        #usernameButton {
+            position: absolute;
+            left: 1120px;
+            top: 350px;
+            width: 85px;
+            height: 75px;
+            background-color: rgba(0,0,0,0);
+            border: none;
+            /*animation: arrowSlideOut 1s infinite;*/
+        }
+        #loginButton {
+            position: absolute;
+            left: 830px;
+            top: 365px;
+            width: 270px;
+            height: 40px;
+            opacity: 0%;
+            color: white;
+            font-family: 'Roboto', sans-serif;
+            font-size: 20px;
+            background-color: purple;
+            border: solid black 5px;
+            border-radius: 20px;
+            transition: 1s;
+            /*animation: buttonSlideIn 1.3s infinite;*/
+        }
+        #loginButton:hover {
+            top: 348px;
+            border-radius: 10px;
+            font-size: 23px;
+            width: 273px;
+            height: 43px;
+        }
+
+        #loader {
+            position: absolute;
+            top: 350px;
+            left: 1100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            max-width: 6rem;
+            margin-top: 3rem;
+            margin-bottom: 3rem;
+            visibility: hidden;
+        }
+        #loader:before,
+        #loader:after {
+            content: "";
+            position: absolute;
+            border-radius: 50%;
+            animation: pulsOut 1.2s ease-in-out infinite;
+            filter: drop-shadow(0 0 1rem rgba(255, 255, 255, 0.75));
+        }
+        #loader:before {
+            width: 100%;
+            padding-bottom: 100%;
+            box-shadow: inset 0 0 0 1rem #fff;
+            animation-name: pulsIn;
+        }
+        #loader:after {
+            width: calc(100% - 2rem);
+            padding-bottom: calc(100% - 2rem);
+            box-shadow: 0 0 0 0 #fff;
+        }
+
+        @keyframes pulsIn {
+            0% {
+            box-shadow: inset 0 0 0 1rem #fff;
+            opacity: 1;
+            }
+            50%, 100% {
+            box-shadow: inset 0 0 0 0 #fff;
+            opacity: 0;
+            }
+        }
+
+        @keyframes pulsOut {
+            0%, 50% {
+            box-shadow: 0 0 0 0 #fff;
+            opacity: 0;
+            }
+            100% {
+            box-shadow: 0 0 0 1rem #fff;
+            opacity: 1;
+            }
+        }
+        
+        #loaderStatus {
+            position: absolute;
+            font-size: 30px;
+            left: 1095px;
+            top: 280px;
+            color: white;
+            visibility: hidden;
+        }
+        #usernameStatus {
+            position: absolute;
+            top: 310px;
+            left: 1040px;
+            color: red;
+            opacity: 0%;
+        }
+    </style>
+
+    <head>
+        <title>Universe - Login</title>
+        <link rel="icon" type="x-icon/images" href="../assets/images/favicon.ico">
+        <meta charset="UTF-8">
+        <div class="slightTitle">
+            <h1 id="title">Login</h1>
+            <p id="title-message">Welcome Back!</p>
+        </div>
+    </head>
+
+
+
+    <body onload="fixElements()">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+
+
+        <div class="sideImgClass">
+            <img id="sideImg" src="../assets/images/galaxy.jpg" alt="picture of a galaxy" width=1000 height=700>
+        </div>
+
+        <div class="user-pass-container">
+            <fieldset id="username-container">
+                <legend id="legend-username">Username</legend>
+                <input placeholder="Username" type="text" id="username">
+            </fieldset>
+            <p id="usernameStatus">Locked out for...</p>
+            <fieldset id="password-container">
+                <legend id="legend-password">Password</legend>
+                <input placeholder="Password" type="password" id="password">
+            </fieldset>
+            
+            <button onclick="checkUsername()" id="usernameButton"><img src="../assets/images/forward_arrow.png" alt="forward arrow" width=70></button>
+            <button onclick="checkPassword()" id="loginButton">Login</button>
+        </div>
+
+        <p id="loaderStatus">Loading...</p>
+        <span id="loader"></span>
+
+        
+
+
+    </body>
+</html>

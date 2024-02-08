@@ -2,7 +2,21 @@
 <html>
 
 <script>
+    function fixElements() {
+        var windowHeight = window.innerHeight;
+        var windowWidth = window.innerWidth;
+        const warningButton = document.getElementById("warning");
+        const warningOverlayDiv = document.getElementById("warningOverlay");
+        warningButton.style.left = String(windowWidth - 90 + "px");
+        warningOverlayDiv.width = String(windowWidth - 25 + "px");
+        warningOverlayDiv.height = String(windowHeight - 25 + "px");
+    }
+    function checkWarningOverlay() {
 
+    }
+    function warningOverlay() {
+
+    }
 </script>
 
 <style>
@@ -30,7 +44,8 @@
     <h1 id="title">Lethal Company Mods</h1>
 </head>
 
-<body background="../../assets/images/galaxy.jpg">
+<body background="../../assets/images/galaxy.jpg" onload="fixElements()">
+
     <br>
     <br>
     <br>
@@ -40,6 +55,7 @@
         <h3 id="funiDogsDepend">Dependencies: BepInEx</h3>
         <a id="funiDogsDownload" href='../../assets/lcmods/FuniDogs.dll' download><img src="../../assets/images/downloadButton.png" alt="download button" width=40></a>
     </div>
+
 
 </body>
 
