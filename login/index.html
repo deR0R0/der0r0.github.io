@@ -39,85 +39,54 @@
 
         //*note to self, PLEASE FIX THE ATTEMPTING SYSTEM PLEASEEEEEEEE
         function checkUsername() {
+            //First, check for lockout
+            lockoutTime = localStorage.getItem("lockoutTime")
             const ucontainer = document.getElementById("username-container");
             const pcontainer = document.getElementById("password-container");
             const usernameButton = document.getElementById("usernameButton");
             const loginButton = document.getElementById("loginButton");
             var usernameInput = document.getElementById("username").value;
             var usernameInputEncoded = btoa(rot13(usernameInput));
-            if(localStorage.getItem("lockoutTime") == null) {
-                if(attempts < 6) {
-                    if(localStorage.getItem("lockoutTime") == null) {
-                        if(usernameInput == "clearLockout") {
-                            localStorage.clear();
-                        }
-                        if(encodedUsernames.includes(usernameInputEncoded)) {
-                            pos = encodedUsernames.indexOf(usernameInputEncoded);
-                            ucontainer.style.animation = "containerSlideOut 0.8s 1";
-                            pcontainer.style.animation = "containerSlideIn 0.8s 1";
-                            pcontainer.style.left = "1030px";
-                            loginButton.style.left = "1030px";
-                            loginButton.style.opacity = "100%";
-                            loginButton.style.animation = "buttonSlideIn 0.8s 1";
-                            usernameButton.style.animation = "arrowSlideOut 0.8 1";
-                            setTimeout(function() {
-                                ucontainer.style.animation = "";
-                                pcontainer.style.animation = "";
-                                loginButton.style.animation = "";
-                                usernameButton.style.animation = "";
-                                ucontainer.style.opacity = "0%";
-                                pcontainer.style.opacity = "100%";
-                                usernameButton.style.opacity = "0%";
-                                document.getElementById("password").focus();
-                            }, 800);
-                        } else {
-                            attempts = attempts + 1;
-                            ucontainer.style.animation = "incorrect 0.8s 1";
-                            setTimeout(function() {
-                                ucontainer.style.animation = "";
-                                document.getElementById("username").value = "";
-                            }, 800);
-                        }
-                    } else {
-                        if(localStorage.getItem("lockoutTime") - getCurrentTime() <= 0) {
-                            localStorage.clear();
-                            attempts = 0;
-                        } else {
-                            attempts = 999;
-                        }
-                    }
-
-                } else {
-                    if(document.getElementById("username").value == "clearLockout") {
-                        localStorage.clear();
-                        document.getElementById("username").value = "";
-                        attempts = 0;
-                        alert("Successfully Cleared Lockout!");
-                    } else {
-                        timeUnlock = localStorage.getItem("lockoutTime");
-                        if(timeUnlock == null) {
-                            var unlockedTime = parseInt(getCurrentTime()) + 20;
-                            localStorage.setItem("lockoutTime", unlockedTime);
-                        } else {
-                            var currentcureenttime = getCurrentTime();
-                            document.getElementById("usernameStatus").style.opacity = "100%";
-                            document.getElementById("usernameStatus").innerHTML = "Locked out for " + String(localStorage.getItem("lockoutTime") - getCurrentTime()) +  " seconds!"
-                            if(currentcureenttime - timeUnlock <= 0) {
-                                localStorage.clear();
-                                attempts = 0;
-                            }
-                        }
-                        ucontainer.style.animation = "lockedOut 0.6s 1";
-                        setTimeout(function() {
-                            ucontainer.style.animation = "";
-                            document.getElementById("username").value = "";
-                        }, 500);
-                    }   
-                }
+            if(encodedUsernames.includes(usernameInputEncoded)) {
+                pos = encodedUsernames.indexOf(usernameInputEncoded);
+                ucontainer.style.animation = "containerSlideOut 0.8s 1";
+                pcontainer.style.animation = "containerSlideIn 0.8s 1";
+                pcontainer.style.left = "1030px";
+                loginButton.style.left = "1030px";
+                loginButton.style.opacity = "100%";
+                loginButton.style.animation = "buttonSlideIn 0.8s 1";
+                usernameButton.style.animation = "arrowSlideOut 0.8 1";
+                setTimeout(function() {
+                    ucontainer.style.animation = "";
+                    pcontainer.style.animation = "";
+                    loginButton.style.animation = "";
+                    usernameButton.style.animation = "";
+                    ucontainer.style.opacity = "0%";
+                    pcontainer.style.opacity = "100%";
+                    usernameButton.style.opacity = "0%";
+                    document.getElementById("password").focus();
+                }, 800);
             } else {
-
+                document.getElementById("username").blur();
+                ucontainer.style.animation = "incorrect 0.8s 1";
+                setTimeout(function() {
+                    ucontainer.style.animation = "";
+                    document.getElementById("username").value = "";
+                    document.getElementById("username").focus();
+                }, 800);
             }
+                
+
+
+
+
+
+
+        //Function end            
         }
+
+
+
 
         function getCurrentTime() {
             currentTime = String(currentDate.getHours()) + String(currentDate.getMinutes()) + String(currentDate.getSeconds());
