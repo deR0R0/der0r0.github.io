@@ -3,6 +3,9 @@
     <script>
         //lockout
         var currentDate = new Date();
+        var loop = window.setInterval(function() {
+            currentDate = new Date();
+        }, 1000);
         var currentTime = String(currentDate.getHours()) + String(currentDate.getMinutes()) + String(currentDate.getSeconds());
         var attempts = 0;
         //Extra vars
@@ -35,6 +38,88 @@
                     document.getElementById("loginButton").click();
                 }
             });
+
+
+            var windowHeight = window.innerHeight;
+            var windowWidth = window.innerWidth;
+            var webDevOpen = true;
+            var modsPluginsOpen = true;
+
+            webDevOpen = false
+            document.getElementById("webdev-login").disabled = true;
+            document.getElementById("webdev-content").style.opacity = "0";
+            document.getElementById("webdev-content").style.marginTop = "-50px";
+
+            modsPluginsOpen = false
+            document.getElementById("mods-plugins-minecraft").disabled = true;
+            document.getElementById("mods-plugins-content").style.opacity = "0";
+            document.getElementById("mods-plugins-content").style.marginTop = "-50px";
+
+            
+
+            const backgroundDark = document.getElementById("background-darkener")
+            const webdevMenu = document.getElementById("webdev-dropdown-menu");
+            const modsPluginsMenu = document.getElementById("mods-plugins-dropdown-menu")
+            backgroundDark.addEventListener("mousedown", function(){
+                menuBar()
+            })
+            webdevMenu.addEventListener("mousedown", function() {
+                if(webDevOpen) {
+                    webDevOpen = false
+                    document.getElementById("webdev-login").disabled = true;
+                    document.getElementById("webdev-content").style.opacity = "0";
+                    document.getElementById("webdev-content").style.marginTop = "-50px";
+                    document.getElementById("webdev-dropdown-icon").style.transform = "rotate(0deg) translateY(-5px)";
+                } else {
+                    webDevOpen = true
+                    document.getElementById("webdev-login").disabled = false;
+                    document.getElementById("webdev-content").style.opacity = "100";
+                    document.getElementById("webdev-content").style.marginTop = "10px";
+                    document.getElementById("webdev-dropdown-icon").style.transform = "rotate(-90deg) translateX(5px)";
+                }
+            })
+            modsPluginsMenu.addEventListener("mousedown", function() {
+                if(modsPluginsOpen) {
+                    modsPluginsOpen = false
+                    document.getElementById("mods-plugins-minecraft").disabled = true;
+                    document.getElementById("mods-plugins-content").style.opacity = "0";
+                    document.getElementById("mods-plugins-content").style.marginTop = "-50px";
+                    document.getElementById("mods-plugins-dropdown-icon").style.transform = "rotate(0deg) translateY(-5px)";
+                } else {
+                    modsPluginsOpen = true
+                    document.getElementById("mods-plugins-minecraft").disabled = false;
+                    document.getElementById("mods-plugins-content").style.opacity = "100";
+                    document.getElementById("mods-plugins-content").style.marginTop = "10px";
+                    document.getElementById("mods-plugins-dropdown-icon").style.transform = "rotate(-90deg) translateX(5px)";
+                }
+            })
+        }
+
+        function checkMenuBar() {
+            barMarginL = document.getElementById("barNavigator").style.marginLeft;
+            if (barMarginL == "0px") {
+                return true
+            } else {
+                return false
+            }
+        }
+        function menuBar() {
+            const menuBar = document.getElementById("barNavigator");
+            const exitSideBarButton = document.getElementById("exitMenu");
+            const backgroundBlur = document.getElementById("background-darkener");
+            if (checkMenuBar()) {
+                menuBar.style.marginLeft = "-320px";
+                backgroundBlur.style.visibility = "hidden";
+                backgroundBlur.style.opacity = "0";
+                document.getElementById("barNavigator-background-darkener").style.opacity = "0";
+                document.getElementById("barNavigator-background-darkener").style.visibility = "hidden";
+            } else {
+                menuBar.style.marginLeft = "0px";
+                backgroundBlur.style.visibility = "visible";
+                backgroundBlur.style.opacity = "100";
+                document.getElementById("barNavigator-background-darkener").style.opacity = "100";
+                document.getElementById("barNavigator-background-darkener").style.visibility = "visible";
+            }
         }
 
         //*note to self, PLEASE FIX THE ATTEMPTING SYSTEM PLEASEEEEEEEE
@@ -51,8 +136,8 @@
                 pos = encodedUsernames.indexOf(usernameInputEncoded);
                 ucontainer.style.animation = "containerSlideOut 0.8s 1";
                 pcontainer.style.animation = "containerSlideIn 0.8s 1";
-                pcontainer.style.left = "1030px";
-                loginButton.style.left = "1030px";
+                pcontainer.style.right = "60px";
+                loginButton.style.right = "60px";
                 loginButton.style.opacity = "100%";
                 loginButton.style.animation = "buttonSlideIn 0.8s 1";
                 usernameButton.style.animation = "arrowSlideOut 0.8 1";
@@ -88,8 +173,12 @@
 
 
 
-        function getCurrentTime() {
-            currentTime = String(currentDate.getHours()) + String(currentDate.getMinutes()) + String(currentDate.getSeconds());
+        function getCurrentTime(split) {
+            if(split) {
+                currentTime = String(currentDate.getHours()) + ":" + String(currentDate.getMinutes()) + ":" + String(currentDate.getSeconds());
+            } else {
+                currentTime = String(currentDate.getHours()) + String(currentDate.getMinutes()) + String(currentDate.getSeconds());
+            }
             return currentTime;
         }
 
@@ -102,31 +191,20 @@
                 pcontainer.style.visibility = "hidden";
                 loginButton.style.opacity = "0%";
                 loginButton.style.transition = "0s";
-                generateCookie();
-            } else {
-                pcontainer.style.animation = "incorrect 0.8s 1";
-                setTimeout(function() {
-                    pcontainer.style.animation = "";
-                    document.getElementById("password").value = "";
-                }, 800);
-            }
-
-        }
-        //Using sessionstorage, easiest cookie method.
-        function generateCookie() {
-            const status = document.getElementById("loaderStatus");
+                
+                const status = document.getElementById("loaderStatus");
             var cookieID = "";
             document.getElementById("loader").style.visibility = "visible";
             status.style.visibility = "visible";
             setTimeout(function() {
                 status.innerHTML = "Verifying...";
-                status.style.left = "1085px";
+                status.style.right = "145px";
                 for(let i=0; i<5; i++) {
                     cookieID = cookieID + Math.floor(Math.random() * 10);
                 }
                 setTimeout(function() {
                     status.innerHTML = "Logging you in...";
-                    status.style.left = "1055px";
+                    status.style.right = "95px";
                     cookieID = cookieID + String(2102009);
 
                     setTimeout(function() {
@@ -135,23 +213,44 @@
                             cookieID = cookieID + Math.floor(Math.random() * 10);
                         }
                         setTimeout(function() {
-                            status.style.left = "1105px";
+                            status.style.right = "177px";
                             status.innerHTML = "Done!";
                             setTimeout(function() {
+                                //Reset Session Storage STUFF
+                                sessionStorage.clear();
                                 sessionStorage.setItem("cookie", cookieID);
                                 sessionStorage.setItem("name", encodedUsernames[pos]);
+                                sessionStorage.setItem("time", getCurrentTime(true))
                                 setTimeout(function() {
-                                    redirect("../content/index.html");
+                                    redirect("../content/");
                                 }, 4000)
                             }, 1000);
                         }, 1000);
                     }, 1000);
                 }, 1000);
             }, 1000);
-        }
 
+            } else {
+                pcontainer.style.animation = "incorrect 0.8s 1";
+                document.getElementById("password").blur();
+                setTimeout(function() {
+                    pcontainer.style.animation = "";
+                    document.getElementById("password").value = "";
+                    document.getElementById("password").focus();
+                }, 800);
+            }
+
+        }
+        
+
+        //Redirects
         function redirect(url) {
-            window.location.assign(url);
+            windowURL = String(window.location);
+            if(windowURL.includes("https://")) {
+                window.location.assign(url);
+            } else {
+                window.location.assign(url + "index.html");
+            }
         }
 
 
@@ -164,10 +263,10 @@
         @import url('https://fonts.googleapis.com/css2?family=Nunito&display=swap');
         /*animations*/
         @keyframes incorrect {
-            0% {left: 1030px; border-color: white; color: white}
-            33% {left: 1000px; border-color: red; color: red}
-            66% {left: 1060px; border-color: red; color: red}
-            100% {left: 1030; border-color: white; color: white}
+            0% {right: 60px; border-color: white; color: white}
+            33% {right: 90px; border-color: red; color: red}
+            66% {right: 30px; border-color: red; color: red}
+            100% {right: 60px; border-color: white; color: white}
         }
         @keyframes lockedOut {
             0% {left: 1030px; border-color: white; color: white}
@@ -176,20 +275,20 @@
             100% {left: 1030; border-color: white; color: white}
         }
         @keyframes containerSlideOut {
-            0% {left: 1030px; opacity: 100%; color: lightgreen; border-color: lightgreen}
-            100% {left: 970px; opacity: 0%; color: lightgreen; border-color: lightgreen}
+            0% {right: 60px; opacity: 100%; color: lightgreen; border-color: lightgreen}
+            100% {right: 120px; opacity: 0%; color: lightgreen; border-color: lightgreen}
         }
         @keyframes containerSlideIn {
-            0% {left: 1090px; opacity: 0%}
-            100% {left: 1030px; opacity: 100%}
+            0% {right: 30px; opacity: 0%}
+            100% {right: 60px;opacity: 100%}
         }
         @keyframes arrowSlideOut {
             0% {left: 1120px; opacity: 100%}
             100% {left:1280px; opacity: 0%}
         }
         @keyframes buttonSlideIn {
-            0% {left: 930px; opacity: 0%}
-            100% {left: 1030px; opacity: 100%}
+            0% {right: 160px; opacity: 0%}
+            100% {right: 60px; opacity: 100%}
         }
         #title {
             margin-top: 90px;
@@ -220,7 +319,7 @@
         #username-container {
             position: absolute;
             color: white;
-            left: 1030px;
+            right: 60px;
             top: 250px;
             width: 200px;
             height: 50px;
@@ -243,7 +342,7 @@
         #password-container {
             position: absolute;
             color: white;
-            left: 830px;
+            right: 300px;
             top: 250px;
             width: 200px;
             height: 50px;
@@ -265,7 +364,7 @@
 
         #usernameButton {
             position: absolute;
-            left: 1120px;
+            right: 160px;
             top: 350px;
             width: 85px;
             height: 75px;
@@ -275,7 +374,7 @@
         }
         #loginButton {
             position: absolute;
-            left: 830px;
+            right: 360px;
             top: 365px;
             width: 270px;
             height: 40px;
@@ -300,7 +399,7 @@
         #loader {
             position: absolute;
             top: 350px;
-            left: 1100px;
+            right: 170px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -355,7 +454,7 @@
         #loaderStatus {
             position: absolute;
             font-size: 30px;
-            left: 1095px;
+            right: 145px;
             top: 280px;
             color: white;
             visibility: hidden;
@@ -367,10 +466,180 @@
             color: red;
             opacity: 0%;
         }
+        /*Menu Bar*/
+        #menu {
+            position: absolute;
+            top: 25px;
+            left: 15px;
+            background-color: rgba(0, 0, 0, 0);
+            border: none;
+            transition: 0.5s;
+        }
+        #menu:hover {
+            left: 13px;
+            top: 23px;
+        }
+        #menuImg {
+            transition: 0.5s;
+        }
+        #menu:hover #menuImg {
+            width: 55px;
+        }
+        #barNavigator {
+            /*Positioning + Sizing*/
+            margin-left: -310px;
+            position: fixed;
+            top: 10px;
+            left: 10px;
+            width: 285px;
+            height: 95vh;
+            /*Style*/
+            background-color: rgba(0, 0, 0, 0.90);
+            border: solid white 0px;
+            border-radius: 20px;
+            transition: 0.5s cubic-bezier(.6,.09,.44,.9);
+            z-index: 100;
+            /*Borderingingingingigngingingigngi*/
+            border: solid white 3px;
+        }
+        #exitMenu {
+            /*Positioning + Sizing*/
+            margin-left: 240px;
+            font-size: 50px;
+            /*Style*/
+            background-color: rgba(0, 0, 0, 0);
+            color: red;
+            border: none;
+            /*Font*/
+            font-family: 'Roboto', sans-serif;
+        }
+        #barNavigator-background-darkener {
+            background-color: rgba(0,0,0,0.65);
+            width: 23vw;
+            height: 100vh;
+            position: fixed;
+            top: 0;
+            left: 0;
+            opacity: 0;
+            visibility: hidden;
+            transition: 1s;
+        }
+        /*Background thing*/
+        #background-darkener {
+            background-color: rgba(0,0,0,0.65);
+            width: 77vw;
+            height: 100vh;
+            position: fixed;
+            top: 0;
+            right: 0;
+            z-index: 200;
+            opacity: 0;
+            visibility: hidden;
+            transition: 1s;
+        }
+        #home-button {
+            position: absolute;
+            left: 0px;
+            top: 5px;
+            background: none;
+            outline: 0;
+            border: none;
+            transition: 0.5s;
+        }
+        #webdev-dropdown-menu {
+            outline: 0;
+            border: none;
+            background: none;
+            margin-left: 75px;
+            margin-top: 20px;
+            font-family: 'Roboto', sans-serif;
+            font-size: 30px;
+            color: white;
+            z-index: 100;
+            position: relative;
+        }
+        #mods-plugins-dropdown-menu {
+            outline: 0;
+            border: none;
+            background: none;
+            margin-left: 35px;
+            margin-top: 20px;
+            font-family: 'Roboto', sans-serif;
+            font-size: 30px;
+            color: white;
+            z-index: 100;
+            position: relative;
+        }
+        #webdev-dropdown-icon {
+            transition: 0.5s;
+            transform: translateY(-5px);
+        }
+        #mods-plugins-dropdown-icon {
+            transition: 0.5s;
+            transform: translateY(-5px);
+        }
+        #webdev-login {
+            font-family: 'Roboto', sans-serif;
+            border: solid red 3px;
+            border-radius: 15px;    
+            color: white;
+            background-color: red;
+            cursor: pointer;
+            font-size: 17px;
+            margin: 10px;
+            padding: .5em;
+            transition: 0.5s;
+            width: 200px;
+            height: 40px;
+            margin-top: 10px;
+            margin-left: 45px;
+            z-index: 1;
+            position: relative;
+        }
+        #mods-plugins-minecraft {
+            font-family: 'Roboto', sans-serif;
+            border: solid red 3px;
+            border-radius: 15px;    
+            color: white;
+            background-color: red;
+            cursor: pointer;
+            font-size: 17px;
+            margin: 10px;
+            padding: .5em;
+            transition: 0.5s;
+            width: 200px;
+            height: 40px;
+            margin-top: 10px;
+            margin-left: 45px;
+            z-index: 1;
+            position: relative;
+        }
+        #webdev-login:hover {
+            border-radius: 5px;
+            width: 205px;
+            height: 45px;
+            margin-top: 8px;
+            margin-left: 42px;
+            font-size: 19px;
+        }
+        #mods-plugins-minecraft:hover {
+            border-radius: 5px;
+            width: 205px;
+            height: 45px;
+            margin-top: 8px;
+            margin-left: 42px;
+            font-size: 19px;
+        }
+        #webdev-content {
+            transition: 0.5s;
+        }
+        #mods-plugins-content {
+            transition: 0.5s;
+        }
     </style>
 
     <head>
-        <title>Universe - Login</title>
+        <title>Roro's Projects - Login</title>
         <link rel="icon" type="x-icon/images" href="../assets/images/favicon.ico">
         <meta charset="UTF-8">
         <div class="slightTitle">
@@ -381,7 +650,9 @@
 
 
 
-    <body onload="fixElements()">
+    <body onload="fixElements()" onresize="fixElements()">
+        
+
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
 
 
@@ -406,9 +677,26 @@
 
         <p id="loaderStatus">Loading...</p>
         <span id="loader"></span>
-
+        <!--Side Nav Bar-->
+        <button onclick="menuBar()" id="menu"><img id="menuImg" src="../assets/images/menubar-inverted.png" alt="menu bar icon", width=50></button>
+        <div id="barNavigator-background-darkener"></div>
+        <div id="barNavigator">
+            <button onclick="menuBar()" id="exitMenu">X</button>
+            <button onclick="redirect('../')" id="home-button"><img src="../assets/images/home.png" alt="home icon" width="45"></button>
+            <div id="webdev-dropdown">
+                <button onclick="" id="webdev-dropdown-menu">WebDev <img id="webdev-dropdown-icon" src="../assets/images/dropdown.png" alt="drop down icon" width="20"></button>
+                <div id="webdev-content">
+                    <button onclick="redirect('./')" id="webdev-login">Login</button>
+                </div>
+                <button onclick="" id="mods-plugins-dropdown-menu">Mods/Plugins <img id="mods-plugins-dropdown-icon" src="../assets/images/dropdown.png" alt="drop down icon" width="20"></button>
+                <div id="mods-plugins-content">
+                    <button onclick="redirect('../mods/minecraft/')" id="mods-plugins-minecraft">Minecraft</button>
+                </div>
+            </div>
+        </div>
         
-
+        <!--Blackout thing majick-->
+        <div id="background-darkener"></div>
 
     </body>
 </html>

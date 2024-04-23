@@ -3,6 +3,11 @@
 
 <html>
     <script>
+        var timeLoggedIn = sessionStorage.getItem("time");
+        var currentDate = new Date();
+        function getCurrentTime() {
+            return String(currentDate.getHours()) + String(currentDate.getMinutes()) + String(currentDate.getSeconds()); 
+        }
         function rot13(message) {
             return message.replace(/[a-z]/gi, letter => String.fromCharCode(letter.charCodeAt(0) + (letter.toLowerCase() <= 'm' ? 13 : -13)));
         } 
@@ -17,11 +22,31 @@
             var cookie = sessionStorage.getItem("cookie");
             //Check cookie
             if(cookie && cookie.includes("2102009") && loggedUser != null) {
-                document.getElementById("user-info").innerHTML = rot13(atob(loggedUser));
+                document.getElementById("user-name").innerHTML = rot13(atob(loggedUser));
             } else {
                 redirectReplace("../login/index.html");
             }
         }
+        function button(element) {
+            USERINFO = document.getElementById("user-info");
+            if(element == "USERINFO") {
+                if(USERINFO.style.display == "block") {
+                    USERINFO.style.display = "none";
+                } else {
+                    USERINFO.style.display = "block";
+                }
+            }
+        }
+
+        function updateTime() {
+            currentDate = new Date();
+            var currentTime = getCurrentTime();
+            document.getElementById("user-info-time-content").innerHTML = parseInt(currentTime) - parseInt(timeLoggedIn);
+        }
+
+        var keepUpdating = window.setInterval(function() {
+            updateTime();
+        }, 1000);
     </script>
 
     <style>
@@ -62,10 +87,10 @@
             top: 20px;
             right: 30px;
         }
-        .user-info {
+        .user-name {
             margin-right: 5px;
         }
-        #user-info {
+        #user-name {
             color: white;
             text-align: center;
             width: 100%;
@@ -76,6 +101,31 @@
             background-color: rgba(0,0,0,0);
             border: none;
             outline: none;
+        }
+        #user-info {
+            position: absolute;
+            margin-right: 90px;
+            border: solid white 3px;
+            border-radius: 10px;
+            right: 0px;
+            top: 30px;
+            height: 300px;
+            width: 200px;
+            display: none;
+        }
+        #user-info-time {
+            color: white;
+            text-align: center;
+            margin-top: 0;
+            font-size: 20px;
+        }
+        #user-info-time-content {
+            color: white;
+            text-align: center;
+            margin-top: 0;
+            padding-top: 0;
+            top: 0;
+            font-size: 15px;
         }
     </style>
 
@@ -89,10 +139,14 @@
     <body background="../assets/images/galaxy2.jpg" onload="startingPage()">
 
         <div class="user">
+            <div id="user-info">
+                <p id="user-info-time">Time Logged In</p>
+                <p id="user-info-time-content">null</p>
+            </div>
             <div class="user-icon" style="text-align: center">
-                <button id="user-icon-button"><span id="user-icon" class="material-symbols-outlined">account_circle</span></button>
-                <div class="user-info">
-                    <label id="user-info" for="user-icon">null</label>
+                <button id="user-icon-button" onclick="button('USERINFO')"><span id="user-icon" class="material-symbols-outlined">account_circle</span></button>
+                <div class="user-name">
+                    <label id="user-name">null</label>
                 </div>
             </div>
         </div>

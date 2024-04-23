@@ -1,16 +1,9 @@
 <!DOCTYPE html>
+
 <html>
-
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-MY7LBNMN5P"></script>
 <script>
-    //Google Analytics
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-MY7LBNMN5P');
-
-    //fix stuff
+//side menu bar
+//side menu bar
     function fixElements() {
         var windowHeight = window.innerHeight;
         var windowWidth = window.innerWidth;
@@ -67,8 +60,6 @@
         })
         
     }
-
-    //side menu bar
     function checkMenuBar() {
         barMarginL = document.getElementById("barNavigator").style.marginLeft;
         if (barMarginL == "0px") {
@@ -83,7 +74,7 @@
         const backgroundBlur = document.getElementById("background-darkener");
         if (checkMenuBar()) {
             menuBar.style.marginLeft = "-320px";
-            backgroundBlur.style.visibility = "hidden"; //
+            backgroundBlur.style.visibility = "hidden";
             backgroundBlur.style.opacity = "0";
             document.getElementById("barNavigator-background-darkener").style.opacity = "0";
             document.getElementById("barNavigator-background-darkener").style.visibility = "hidden";
@@ -104,67 +95,16 @@
             window.location.assign(url + "index.html");
         }
     }
-
-
-
 </script>
-
-
 
 <style>
 /*Roboto Font*/
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;500&display=swap');
-/*Background*/
+
 body {
-    margin: auto;
-    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-    overflow: auto;
-    background: linear-gradient(315deg, rgba(101,0,94,1) 3%, rgba(60,132,206,1) 38%, rgba(48,238,226,1) 68%, rgba(255,25,25,1) 98%);
-    animation: gradient 15s ease infinite;
-    background-size: 400% 400%;
-    background-attachment: fixed;
+    font-family: 'Roboto', sans-serif;
+    background-image: linear-gradient(to right, blue, purple)
 }
-
-@keyframes gradient {
-    0% {background-position: 0% 0%;}
-    50% {background-position: 100% 100%;}
-    100% {background-position: 0% 0%;}
-}
-
-.wave {
-    background: rgb(255 255 255 / 25%);
-    border-radius: 1000% 1000% 0 0;
-    position: fixed;
-    width: 200%;
-    height: 12em;
-    animation: wave 10s -3s linear infinite;
-    transform: translate3d(0, 0, 0);
-    opacity: 0.8;
-    bottom: 0;
-    left: 0;
-    z-index: -1;
-}
-.wave:nth-of-type(2) {
-    bottom: -1.25em;
-    animation: wave 18s linear reverse infinite;
-    opacity: 0.8;
-}
-.wave:nth-of-type(3) {
-    bottom: -2.5em;
-    animation: wave 20s -1s reverse infinite;
-    opacity: 0.9;
-}
-@keyframes wave {
-    2% {transform: translateX(1);}
-    25% {transform: translateX(-25%);}
-    50% {transform: translateX(-50%);}
-    75% {transform: translateX(-25%);}
-    100% {transform: translateX(1);}
-}
-/*Animations*/
-
-
-/*Hide elemts*/
 .header {
     /*For head text*/
     font-family: 'Roboto', sans-serif;
@@ -174,21 +114,17 @@ body {
     transition: 1s;
     margin: auto;
     /*Resize div*/
-    width: 500px;
+    width: 330px;
     height: 60px;
     margin-left: auto;
     margin-right: auto;
+    margin-top: 0px;
 }
 
 .header:hover {
     /*Make the text slightly larger on hover*/
-    font-size: 23px;
-}
-/*Github Stuff*/
-#github {
-    position: absolute;
-    top: 25px;
-    left: 80px;
+    font-size: 22px;
+    padding-top: -6px;
 }
 /*Menu Bar*/
 #menu {
@@ -360,163 +296,43 @@ body {
 #mods-plugins-content {
     transition: 0.5s;
 }
-/*Mods*/
-.mods {
-    text-align: center;
-    margin: auto;
-    border: dotted black 3px;
-    width: 230px;
-    height: auto;
-    border-radius: 20px;
-}
-
-#mods-minecraft {
-    font-family: 'Roboto', sans-serif;
-    border: solid red 3px;
-    border-radius: 15px;    
-    color: white;
-    background-color: red;
-    cursor: pointer;
-    font-size: 17px;
-    margin: 10px;
-    padding: .5em;
-    transition: 0.5s;
-    width: 200px;
-    height: 40px;
-}
-#mods-minecraft:hover {
-    border-radius: 5px;
-    width: 205px;
-    height: 45px;
-    font-size: 19px;
-    margin: 7.8px;
-}
-
-/*Projects*/
-.projects {
-    text-align: center;
-    margin: auto;
-    border: dotted black 3px;
-    width: 230px;
-    height: auto;
-    border-radius: 20px;
-}
-#login {
-    font-family: 'Roboto', sans-serif;
-    border: solid red 3px;
-    border-radius: 15px;    
-    color: white;
-    background-color: red;
-    cursor: pointer;
-    font-size: 17px;
-    margin: 10px;
-    padding: .5em;
-    transition: 0.5s;
-    width: 200px;
-    height: 40px;
-}
-#login:hover {
-    border-radius: 5px;
-    width: 205px;
-    height: 45px;
-    font-size: 19px;
-    margin: 7.8px;
-}
-/*watermark*/
-#watermark {
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-    text-align: center;
-}
-
-
-
-
-
-
 </style>
 
-
-
-
-
-
-
 <head>
-    <title>Roro</title>
-    <link rel="icon" type="image/x-icon" href="./assets/images/favicon.ico">
-    <meta charset="UTF-8">
-    <meta name="description" content="Roro runs this website 😎">
-    <meta name="keywords" content="Roro">
-    <meta name="author" content="deRoro">
+    <title>Roro's Mods</title>
+    <link rel="icon" type="image/x-icon" href="../../assets/images/favicon.ico">
     <div class="header">
-        <h1 id="title">Roro's Projects</h1>
+        <h1 id="top-title">Minecraft Mods</h1>
     </div>
-        
+    <meta charset="UTF-8">
+    <meta name="description" content="Minecraft Mods/Plugins Made By Roro">
+    <meta name="keywords" content="minecraft, spigot, bukkit, mods, plugins">
+    <meta name="author" content="Roro">
+    <meta name="viewport" content="width=device-width initial-scale=1.0">
 </head>
 
-
 <body onload="fixElements()">
-    
-    <!--Waves-->
-    <div>
-        <div class="wave"></div>
-        <div class="wave"></div>
-        <div class="wave"></div>
-    </div>
-    <!--Github-->
-    <div class="githubStuff">
-        <a id="github" href="https://github.com/deR0R0/der0r0.github.io"><img src="./assets/images/github.png" width=50 alt="github logo"></a>
-    </div>
     <!--Side Nav Bar-->
-    <button onclick="menuBar()" id="menu"><img id="menuImg" src="./assets/images/menubar.png" alt="menu bar icon", width=50></button>
+    <button onclick="menuBar()" id="menu"><img id="menuImg" src="../../assets/images/menubar.png" alt="menu bar icon", width=50></button>
     <div id="barNavigator-background-darkener"></div>
     <div id="barNavigator">
         <button onclick="menuBar()" id="exitMenu">X</button>
-        <button onclick="redirect('./')" id="home-button"><img src="./assets/images/home.png" alt="home icon" width="45"></button>
+        <button onclick="redirect('../../')" id="home-button"><img src="../../assets/images/home.png" alt="home icon" width="45"></button>
         <div id="webdev-dropdown">
-            <button onclick="" id="webdev-dropdown-menu">WebDev <img id="webdev-dropdown-icon" src="./assets/images/dropdown.png" alt="drop down icon" width="20"></button>
+            <button onclick="" id="webdev-dropdown-menu">WebDev <img id="webdev-dropdown-icon" src="../../assets/images/dropdown.png" alt="drop down icon" width="20"></button>
             <div id="webdev-content">
-                <button onclick="redirect('./login/')" id="webdev-login">Login</button>
+                <button onclick="redirect('../../login/')" id="webdev-login">Login</button>
             </div>
-            <button onclick="" id="mods-plugins-dropdown-menu">Mods/Plugins <img id="mods-plugins-dropdown-icon" src="./assets/images/dropdown.png" alt="drop down icon" width="20"></button>
+            <button onclick="" id="mods-plugins-dropdown-menu">Mods/Plugins <img id="mods-plugins-dropdown-icon" src="../../assets/images/dropdown.png" alt="drop down icon" width="20"></button>
             <div id="mods-plugins-content">
-                <button onclick="redirect('./mods/minecraft/')" id="mods-plugins-minecraft">Minecraft</button>
+                <button onclick="redirect('../../mods/minecraft/')" id="mods-plugins-minecraft">Minecraft</button>
             </div>
         </div>
     </div>
-   
-    <!--Redirects-->
-    <br>
-    <br>
-    <br>
-    <div class="redirects">
-        <div class="projects">
-            <h2>WebDev</h2>
-            <p>PURE: HTML, Javascript, CSS</p>
-            <button onclick="redirect('./login/')" id="login">Login</button>
-        </div>
-        <br>
-        <br>
-        <br>
-        <div class="mods">
-            <h2>Mods/Plugins</h2>
-            <p>Java</p>
-            <button onclick="redirect('./mods/minecraft/')" id="mods-minecraft">Minecraft</button>
-        </div>
-    </div>
 
 
-    <p id="watermark">Made with 💖 by Roro</p>
 
-
-     <!--Blackout thing majick-->
-     <div id="background-darkener"></div>
-
-
+    <!--Blackout thing majick-->
+    <div id="background-darkener"></div>
 </body>
-
-
-
 </html>
