@@ -4,11 +4,13 @@
 <script>
 //side menu bar
 //side menu bar
+    //fix stuff
     function fixElements() {
         var windowHeight = window.innerHeight;
         var windowWidth = window.innerWidth;
         var webDevOpen = true;
         var modsPluginsOpen = true;
+        var barChanging = false;
 
         webDevOpen = false
         document.getElementById("webdev-login").disabled = true;
@@ -26,7 +28,7 @@
         const webdevMenu = document.getElementById("webdev-dropdown-menu");
         const modsPluginsMenu = document.getElementById("mods-plugins-dropdown-menu")
         backgroundDark.addEventListener("mousedown", function(){
-            menuBar()
+            closeBar();
         })
         webdevMenu.addEventListener("mousedown", function() {
             if(webDevOpen) {
@@ -60,6 +62,8 @@
         })
         
     }
+
+    //side menu bar
     function checkMenuBar() {
         barMarginL = document.getElementById("barNavigator").style.marginLeft;
         if (barMarginL == "0px") {
@@ -74,7 +78,7 @@
         const backgroundBlur = document.getElementById("background-darkener");
         if (checkMenuBar()) {
             menuBar.style.marginLeft = "-320px";
-            backgroundBlur.style.visibility = "hidden";
+            backgroundBlur.style.visibility = "hidden"; //
             backgroundBlur.style.opacity = "0";
             document.getElementById("barNavigator-background-darkener").style.opacity = "0";
             document.getElementById("barNavigator-background-darkener").style.visibility = "hidden";
@@ -85,6 +89,16 @@
             document.getElementById("barNavigator-background-darkener").style.opacity = "100";
             document.getElementById("barNavigator-background-darkener").style.visibility = "visible";
         }
+    }
+    function closeBar() {
+        const menuBar = document.getElementById("barNavigator");
+        const exitSideBarButton = document.getElementById("exitMenu");
+        const backgroundBlur = document.getElementById("background-darkener");
+        menuBar.style.marginLeft = "-320px";
+        backgroundBlur.style.visibility = "hidden"; //
+        backgroundBlur.style.opacity = "0";
+        document.getElementById("barNavigator-background-darkener").style.opacity = "0";
+        document.getElementById("barNavigator-background-darkener").style.visibility = "hidden"; 
     }
     //Redirects
     function redirect(url) {
@@ -159,7 +173,7 @@ body {
     border-radius: 20px;
     transition: 0.5s cubic-bezier(.6,.09,.44,.9);
     z-index: 100;
-    /*Borderingingingingigngingingigngi*/
+    /*Borderingingingingigngingingigngi :skull:*/
     border: solid white 3px;
 }
 #exitMenu {

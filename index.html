@@ -16,6 +16,7 @@
         var windowWidth = window.innerWidth;
         var webDevOpen = true;
         var modsPluginsOpen = true;
+        var barChanging = false;
 
         webDevOpen = false
         document.getElementById("webdev-login").disabled = true;
@@ -32,8 +33,21 @@
         const backgroundDark = document.getElementById("background-darkener")
         const webdevMenu = document.getElementById("webdev-dropdown-menu");
         const modsPluginsMenu = document.getElementById("mods-plugins-dropdown-menu")
+
+        let prevTitle = document.title;
+        window.addEventListener("blur", function() {
+            document.title = "Come Back! 😭";
+        });
+        window.addEventListener("focus", function() {
+            document.title = "Thank You! 😆"
+            setTimeout(function() {
+                document.title = prevTitle;
+            }, 1000)
+        });
+
+
         backgroundDark.addEventListener("mousedown", function(){
-            menuBar()
+            closeBar();
         })
         webdevMenu.addEventListener("mousedown", function() {
             if(webDevOpen) {
@@ -94,6 +108,16 @@
             document.getElementById("barNavigator-background-darkener").style.opacity = "100";
             document.getElementById("barNavigator-background-darkener").style.visibility = "visible";
         }
+    }
+    function closeBar() {
+        const menuBar = document.getElementById("barNavigator");
+        const exitSideBarButton = document.getElementById("exitMenu");
+        const backgroundBlur = document.getElementById("background-darkener");
+        menuBar.style.marginLeft = "-320px";
+        backgroundBlur.style.visibility = "hidden"; //
+        backgroundBlur.style.opacity = "0";
+        document.getElementById("barNavigator-background-darkener").style.opacity = "0";
+        document.getElementById("barNavigator-background-darkener").style.visibility = "hidden"; 
     }
     //Redirects
     function redirect(url) {
