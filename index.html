@@ -1,546 +1,78 @@
 <!DOCTYPE html>
-<html>
-
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-MY7LBNMN5P"></script>
-<script>
-    //Google Analytics
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-MY7LBNMN5P');
-
-    //fix stuff
-    function fixElements() {
-        var windowHeight = window.innerHeight;
-        var windowWidth = window.innerWidth;
-        var webDevOpen = true;
-        var modsPluginsOpen = true;
-        var barChanging = false;
-
-        webDevOpen = false
-        document.getElementById("webdev-login").disabled = true;
-        document.getElementById("webdev-content").style.opacity = "0";
-        document.getElementById("webdev-content").style.marginTop = "-50px";
-
-        modsPluginsOpen = false
-        document.getElementById("mods-plugins-minecraft").disabled = true;
-        document.getElementById("mods-plugins-content").style.opacity = "0";
-        document.getElementById("mods-plugins-content").style.marginTop = "-50px";
-
-        
-
-        const backgroundDark = document.getElementById("background-darkener")
-        const webdevMenu = document.getElementById("webdev-dropdown-menu");
-        const modsPluginsMenu = document.getElementById("mods-plugins-dropdown-menu")
-
-        let prevTitle = document.title;
-        window.addEventListener("blur", function() {
-            document.title = "Come Back! 😭";
-        });
-        window.addEventListener("focus", function() {
-            document.title = "Thank You! 😆"
-            setTimeout(function() {
-                document.title = prevTitle;
-            }, 1000)
-        });
-
-
-        backgroundDark.addEventListener("mousedown", function(){
-            closeBar();
-        })
-        webdevMenu.addEventListener("mousedown", function() {
-            if(webDevOpen) {
-                webDevOpen = false
-                document.getElementById("webdev-login").disabled = true;
-                document.getElementById("webdev-content").style.opacity = "0";
-                document.getElementById("webdev-content").style.marginTop = "-50px";
-                document.getElementById("webdev-dropdown-icon").style.transform = "rotate(0deg) translateY(-5px)";
-            } else {
-                webDevOpen = true
-                document.getElementById("webdev-login").disabled = false;
-                document.getElementById("webdev-content").style.opacity = "100";
-                document.getElementById("webdev-content").style.marginTop = "10px";
-                document.getElementById("webdev-dropdown-icon").style.transform = "rotate(-90deg) translateX(5px)";
-            }
-        })
-        modsPluginsMenu.addEventListener("mousedown", function() {
-            if(modsPluginsOpen) {
-                modsPluginsOpen = false
-                document.getElementById("mods-plugins-minecraft").disabled = true;
-                document.getElementById("mods-plugins-content").style.opacity = "0";
-                document.getElementById("mods-plugins-content").style.marginTop = "-50px";
-                document.getElementById("mods-plugins-dropdown-icon").style.transform = "rotate(0deg) translateY(-5px)";
-            } else {
-                modsPluginsOpen = true
-                document.getElementById("mods-plugins-minecraft").disabled = false;
-                document.getElementById("mods-plugins-content").style.opacity = "100";
-                document.getElementById("mods-plugins-content").style.marginTop = "10px";
-                document.getElementById("mods-plugins-dropdown-icon").style.transform = "rotate(-90deg) translateX(5px)";
-            }
-        })
-        
-    }
-
-    //side menu bar
-    function checkMenuBar() {
-        barMarginL = document.getElementById("barNavigator").style.marginLeft;
-        if (barMarginL == "0px") {
-            return true
-        } else {
-            return false
-        }
-    }
-    function menuBar() {
-        const menuBar = document.getElementById("barNavigator");
-        const exitSideBarButton = document.getElementById("exitMenu");
-        const backgroundBlur = document.getElementById("background-darkener");
-        if (checkMenuBar()) {
-            menuBar.style.marginLeft = "-320px";
-            backgroundBlur.style.visibility = "hidden"; //
-            backgroundBlur.style.opacity = "0";
-            document.getElementById("barNavigator-background-darkener").style.opacity = "0";
-            document.getElementById("barNavigator-background-darkener").style.visibility = "hidden";
-        } else {
-            menuBar.style.marginLeft = "0px";
-            backgroundBlur.style.visibility = "visible";
-            backgroundBlur.style.opacity = "100";
-            document.getElementById("barNavigator-background-darkener").style.opacity = "100";
-            document.getElementById("barNavigator-background-darkener").style.visibility = "visible";
-        }
-    }
-    function closeBar() {
-        const menuBar = document.getElementById("barNavigator");
-        const exitSideBarButton = document.getElementById("exitMenu");
-        const backgroundBlur = document.getElementById("background-darkener");
-        menuBar.style.marginLeft = "-320px";
-        backgroundBlur.style.visibility = "hidden"; //
-        backgroundBlur.style.opacity = "0";
-        document.getElementById("barNavigator-background-darkener").style.opacity = "0";
-        document.getElementById("barNavigator-background-darkener").style.visibility = "hidden"; 
-    }
-    //Redirects
-    function redirect(url) {
-        windowURL = String(window.location);
-        if(windowURL.includes("https://")) {
-            window.location.assign(url);
-        } else {
-            window.location.assign(url + "index.html");
-        }
-    }
-
-
-
-</script>
-
-
-
-<style>
-/*Roboto Font*/
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;500&display=swap');
-/*Background*/
-body {
-    margin: auto;
-    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-    overflow: auto;
-    background: linear-gradient(315deg, rgba(101,0,94,1) 3%, rgba(60,132,206,1) 38%, rgba(48,238,226,1) 68%, rgba(255,25,25,1) 98%);
-    animation: gradient 15s ease infinite;
-    background-size: 400% 400%;
-    background-attachment: fixed;
-}
-
-@keyframes gradient {
-    0% {background-position: 0% 0%;}
-    50% {background-position: 100% 100%;}
-    100% {background-position: 0% 0%;}
-}
-
-.wave {
-    background: rgb(255 255 255 / 25%);
-    border-radius: 1000% 1000% 0 0;
-    position: fixed;
-    width: 200%;
-    height: 12em;
-    animation: wave 10s -3s linear infinite;
-    transform: translate3d(0, 0, 0);
-    opacity: 0.8;
-    bottom: 0;
-    left: 0;
-    z-index: -1;
-}
-.wave:nth-of-type(2) {
-    bottom: -1.25em;
-    animation: wave 18s linear reverse infinite;
-    opacity: 0.8;
-}
-.wave:nth-of-type(3) {
-    bottom: -2.5em;
-    animation: wave 20s -1s reverse infinite;
-    opacity: 0.9;
-}
-@keyframes wave {
-    2% {transform: translateX(1);}
-    25% {transform: translateX(-25%);}
-    50% {transform: translateX(-50%);}
-    75% {transform: translateX(-25%);}
-    100% {transform: translateX(1);}
-}
-/*Animations*/
-
-
-/*Hide elemts*/
-.header {
-    /*For head text*/
-    font-family: 'Roboto', sans-serif;
-    text-align: center;
-    color: white;
-    font-size: 20px;
-    transition: 1s;
-    margin: auto;
-    /*Resize div*/
-    width: 500px;
-    height: 60px;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-.header:hover {
-    /*Make the text slightly larger on hover*/
-    font-size: 23px;
-}
-/*Github Stuff*/
-#github {
-    position: absolute;
-    top: 25px;
-    left: 80px;
-}
-/*Menu Bar*/
-#menu {
-    position: absolute;
-    top: 25px;
-    left: 15px;
-    background-color: rgba(0, 0, 0, 0);
-    border: none;
-    transition: 0.5s;
-}
-#menu:hover {
-    left: 13px;
-    top: 23px;
-}
-#menuImg {
-    transition: 0.5s;
-}
-#menu:hover #menuImg {
-    width: 55px;
-}
-#barNavigator {
-    /*Positioning + Sizing*/
-    margin-left: -310px;
-    position: fixed;
-    top: 10px;
-    left: 10px;
-    width: 285px;
-    height: 95vh;
-    /*Style*/
-    background-color: rgba(0, 0, 0, 0.90);
-    border: solid white 0px;
-    border-radius: 20px;
-    transition: 0.5s cubic-bezier(.6,.09,.44,.9);
-    z-index: 100;
-    /*Borderingingingingigngingingigngi*/
-    border: solid white 3px;
-}
-#exitMenu {
-    /*Positioning + Sizing*/
-    margin-left: 240px;
-    font-size: 50px;
-    /*Style*/
-    background-color: rgba(0, 0, 0, 0);
-    color: red;
-    border: none;
-    /*Font*/
-    font-family: 'Roboto', sans-serif;
-}
-#barNavigator-background-darkener {
-    background-color: rgba(0,0,0,0.65);
-    width: 23vw;
-    height: 100vh;
-    position: fixed;
-    top: 0;
-    left: 0;
-    opacity: 0;
-    visibility: hidden;
-    transition: 1s;
-}
-/*Background thing*/
-#background-darkener {
-    background-color: rgba(0,0,0,0.65);
-    width: 77vw;
-    height: 100vh;
-    position: fixed;
-    top: 0;
-    right: 0;
-    z-index: 200;
-    opacity: 0;
-    visibility: hidden;
-    transition: 1s;
-}
-#home-button {
-    position: absolute;
-    left: 0px;
-    top: 5px;
-    background: none;
-    outline: 0;
-    border: none;
-    transition: 0.5s;
-}
-#webdev-dropdown-menu {
-    outline: 0;
-    border: none;
-    background: none;
-    margin-left: 75px;
-    margin-top: 20px;
-    font-family: 'Roboto', sans-serif;
-    font-size: 30px;
-    color: white;
-    z-index: 100;
-    position: relative;
-}
-#mods-plugins-dropdown-menu {
-    outline: 0;
-    border: none;
-    background: none;
-    margin-left: 35px;
-    margin-top: 20px;
-    font-family: 'Roboto', sans-serif;
-    font-size: 30px;
-    color: white;
-    z-index: 100;
-    position: relative;
-}
-#webdev-dropdown-icon {
-    transition: 0.5s;
-    transform: translateY(-5px);
-}
-#mods-plugins-dropdown-icon {
-    transition: 0.5s;
-    transform: translateY(-5px);
-}
-#webdev-login {
-    font-family: 'Roboto', sans-serif;
-    border: solid red 3px;
-    border-radius: 15px;    
-    color: white;
-    background-color: red;
-    cursor: pointer;
-    font-size: 17px;
-    margin: 10px;
-    padding: .5em;
-    transition: 0.5s;
-    width: 200px;
-    height: 40px;
-    margin-top: 10px;
-    margin-left: 45px;
-    z-index: 1;
-    position: relative;
-}
-#mods-plugins-minecraft {
-    font-family: 'Roboto', sans-serif;
-    border: solid red 3px;
-    border-radius: 15px;    
-    color: white;
-    background-color: red;
-    cursor: pointer;
-    font-size: 17px;
-    margin: 10px;
-    padding: .5em;
-    transition: 0.5s;
-    width: 200px;
-    height: 40px;
-    margin-top: 10px;
-    margin-left: 45px;
-    z-index: 1;
-    position: relative;
-}
-#webdev-login:hover {
-    border-radius: 5px;
-    width: 205px;
-    height: 45px;
-    margin-top: 8px;
-    margin-left: 42px;
-    font-size: 19px;
-}
-#mods-plugins-minecraft:hover {
-    border-radius: 5px;
-    width: 205px;
-    height: 45px;
-    margin-top: 8px;
-    margin-left: 42px;
-    font-size: 19px;
-}
-#webdev-content {
-    transition: 0.5s;
-}
-#mods-plugins-content {
-    transition: 0.5s;
-}
-/*Mods*/
-.mods {
-    text-align: center;
-    margin: auto;
-    border: dotted black 3px;
-    width: 230px;
-    height: auto;
-    border-radius: 20px;
-}
-
-#mods-minecraft {
-    font-family: 'Roboto', sans-serif;
-    border: solid red 3px;
-    border-radius: 15px;    
-    color: white;
-    background-color: red;
-    cursor: pointer;
-    font-size: 17px;
-    margin: 10px;
-    padding: .5em;
-    transition: 0.5s;
-    width: 200px;
-    height: 40px;
-}
-#mods-minecraft:hover {
-    border-radius: 5px;
-    width: 205px;
-    height: 45px;
-    font-size: 19px;
-    margin: 7.8px;
-}
-
-/*Projects*/
-.projects {
-    text-align: center;
-    margin: auto;
-    border: dotted black 3px;
-    width: 230px;
-    height: auto;
-    border-radius: 20px;
-}
-#login {
-    font-family: 'Roboto', sans-serif;
-    border: solid red 3px;
-    border-radius: 15px;    
-    color: white;
-    background-color: red;
-    cursor: pointer;
-    font-size: 17px;
-    margin: 10px;
-    padding: .5em;
-    transition: 0.5s;
-    width: 200px;
-    height: 40px;
-}
-#login:hover {
-    border-radius: 5px;
-    width: 205px;
-    height: 45px;
-    font-size: 19px;
-    margin: 7.8px;
-}
-/*watermark*/
-#watermark {
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-    text-align: center;
-}
-
-
-
-
-
-
-</style>
-
-
-
-
-
-
-
+<html lang="en">
 <head>
-    <title>Roro</title>
-    <link rel="icon" type="image/x-icon" href="./assets/images/favicon.ico">
+    <link rel="stylesheet" href="./styles/main.css">
+    <link id="favicon" rel="icon" href="https://avatars.githubusercontent.com/u/126121919?v=4" type="image/png" sizes="16x16">
+    <script src="./scripts/main.js"></script>
     <meta charset="UTF-8">
-    <meta name="description" content="Roro runs this website 😎">
-    <meta name="keywords" content="Roro">
-    <meta name="author" content="deRoro">
-    <div class="header">
-        <h1 id="title">Roro's Projects</h1>
-    </div>
-        
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>deR0R0</title>
 </head>
-
-
-<body onload="fixElements()">
-    
-    <!--Waves-->
-    <div>
-        <div class="wave"></div>
-        <div class="wave"></div>
-        <div class="wave"></div>
+<body>
+    <div class="navbar">
+        <p>Home</p>
+        <p>Projects</p>
+        <p>WAID?</p>
     </div>
-    <!--Github-->
-    <div class="githubStuff">
-        <a id="github" href="https://github.com/deR0R0/der0r0.github.io"><img src="./assets/images/github.png" width=50 alt="github logo"></a>
-    </div>
-    <!--Side Nav Bar-->
-    <button onclick="menuBar()" id="menu"><img id="menuImg" src="./assets/images/menubar.png" alt="menu bar icon", width=50></button>
-    <div id="barNavigator-background-darkener"></div>
-    <div id="barNavigator">
-        <button onclick="menuBar()" id="exitMenu">X</button>
-        <button onclick="redirect('./')" id="home-button"><img src="./assets/images/home.png" alt="home icon" width="45"></button>
-        <div id="webdev-dropdown">
-            <button onclick="" id="webdev-dropdown-menu">WebDev <img id="webdev-dropdown-icon" src="./assets/images/dropdown.png" alt="drop down icon" width="20"></button>
-            <div id="webdev-content">
-                <button onclick="redirect('./login/')" id="webdev-login">Login</button>
+
+    <div class="content">
+        <div class="content-intro">
+            <h1 id="content-intro-name">I'm <span style="color: var(--primary)">Roro!</span> (deR0R0)</h1>
+        </div>
+        <div class="content-desc">
+            <p>I make random stuff that I find useful or fun! I am also a avid gamer!</p>
+            <p>I am also currently a student @ <a style="color: var(--primary)" target="_blank" rel="noopener noreferrer" href="https://tjhsst.fcps.edu">TJHSST</a></p>
+            <p>You can check out some of the projects I've made in the project tab!</p>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="content-langs">
+            <div class="content-langs-familiar">
+                <h1>Familiar Languages/Platforms 🧠</h1>
+                <p>java (spigot, android)</p>
+                <p>python</p>
+                <p>webdev</p>
+                <p>electron.js</p>
+                <p>c# (bepinex)</p>
+                <p>arduino</p>
+                <p>lua (roblox)</p>
+                <p>json</p>
+                <p>yaml</p>
+                <p>xml (android)</p>
+                <p>vscode</p>
+                <p>visual studio</p>
+                <p>pycharm</p>
+                <p>intellij idea</p>
+                <p>github</p>
             </div>
-            <button onclick="" id="mods-plugins-dropdown-menu">Mods/Plugins <img id="mods-plugins-dropdown-icon" src="./assets/images/dropdown.png" alt="drop down icon" width="20"></button>
-            <div id="mods-plugins-content">
-                <button onclick="redirect('./mods/minecraft/')" id="mods-plugins-minecraft">Minecraft</button>
+            <div class="content-langs-learning">
+                <h1>Learning Languages/Platforms🌱</h1>
+                <p>java</p>
+                <p>c++</p>
+                <p>mongodb</p>
+            </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="content-platforms">
+            <h1>Platforms</h1>
+            <div class="content-platforms-github">
+                <img id="content-platforms-platform-icon" src="./images/github_logo.svg" width="50">
+                <span>Github • @deR0R0</span>
+            </div>
+            <div class="content-platforms-modrinth">
+                <img id="content-platforms-platform-icon" src="./images/modrinth_logo.svg" width="50">
+                <span>Modrinth • @deR0R0</span>
+            </div>
+            <div class="content-platforms-replit">
+                <img id="content-platforms-platform-icon" src="./images/replit_logo.svg" width="50">
+                <span>Replit • @deR0R0</span>
             </div>
         </div>
     </div>
-   
-    <!--Redirects-->
-    <br>
-    <br>
-    <br>
-    <div class="redirects">
-        <div class="projects">
-            <h2>WebDev</h2>
-            <p>PURE: HTML, Javascript, CSS</p>
-            <button onclick="redirect('./login/')" id="login">Login</button>
-        </div>
-        <br>
-        <br>
-        <br>
-        <div class="mods">
-            <h2>Mods/Plugins</h2>
-            <p>Java</p>
-            <button onclick="redirect('./mods/minecraft/')" id="mods-minecraft">Minecraft</button>
-        </div>
-    </div>
 
-
-    <p id="watermark">Made with 💖 by Roro</p>
-
-
-     <!--Blackout thing majick-->
-     <div id="background-darkener"></div>
-
-
+    <div class="watermark">Made with 💖 by Roro • <a style="color: var(--text)" target="_blank" rel="noopener noreferrer" href="https://github.com/deR0R0/der0r0.github.io">Source Code</a></div>
 </body>
-
-
-
 </html>
