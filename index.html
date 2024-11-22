@@ -1,78 +1,57 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link rel="stylesheet" href="./styles/main.css">
-    <link id="favicon" rel="icon" href="https://avatars.githubusercontent.com/u/126121919?v=4" type="image/png" sizes="16x16">
-    <script src="./scripts/main.js"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>deR0R0</title>
+    <title>Home | Robert</title>
+    <link rel="icon" type="image/x-icon" href="https://avatars.githubusercontent.com/u/126121919?v=4">
+    <link href="output.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+    <meta property="og:title" content="Robert Zhao's Portfolio">
+    <meta property="og:description" content="What am I supposed to put here; the title is sufficent">
+    <meta property="og:site_name" content="Robert Zhao's Portfolio">
+    <meta property="og:image" content="https://avatars.githubusercontent.com/u/126121919?v=4">
 </head>
-<body>
-    <div class="navbar">
-        <p>Home</p>
-        <p>Projects</p>
-        <p>WAID?</p>
-    </div>
-
-    <div class="content">
-        <div class="content-intro">
-            <h1 id="content-intro-name">I'm <span style="color: var(--primary)">Roro!</span> (deR0R0)</h1>
-        </div>
-        <div class="content-desc">
-            <p>I make random stuff that I find useful or fun! I am also a avid gamer!</p>
-            <p>I am also currently a student @ <a style="color: var(--primary)" target="_blank" rel="noopener noreferrer" href="https://tjhsst.fcps.edu">TJHSST</a></p>
-            <p>You can check out some of the projects I've made in the project tab!</p>
-        </div>
-
-        <div class="divider"></div>
-
-        <div class="content-langs">
-            <div class="content-langs-familiar">
-                <h1>Familiar Languages/Platforms 🧠</h1>
-                <p>java (spigot, android)</p>
-                <p>python</p>
-                <p>webdev</p>
-                <p>electron.js</p>
-                <p>c# (bepinex)</p>
-                <p>arduino</p>
-                <p>lua (roblox)</p>
-                <p>json</p>
-                <p>yaml</p>
-                <p>xml (android)</p>
-                <p>vscode</p>
-                <p>visual studio</p>
-                <p>pycharm</p>
-                <p>intellij idea</p>
-                <p>github</p>
-            </div>
-            <div class="content-langs-learning">
-                <h1>Learning Languages/Platforms🌱</h1>
-                <p>java</p>
-                <p>c++</p>
-                <p>mongodb</p>
+<body class="antialiased bg-slate-800">
+    <!--
+    Tailwind CSS Dev Command
+    npm run dev
+    -->
+    <div class="bg-slate-200 dark:bg-slate-800 flex-1 flex flex-col h-screen font-bold">
+        <nav class="bg-slate-400 dark:bg-slate-900  w-screen h-16 sm:h-20 rounded-xl shadow-slate-200 dark:shadow-slate-950 shadow-lg flex flex-row">
+            <!--hover:shadow-[inset_0px_0px_4px_#334155]-->
+            <img alt="Robert Zhao's github profile picture, click to return to home page" onclick="window.location.href = './'" class="w-[40px] h-[40px] sm:w-[50px] sm:h-[50px] my-3 mx-4 sm:my-4 sm:mx-5 rounded-lg hover:-translate-y-0.5 hover:rounded-sm active:rounded-sm hover:cursor-pointer duration-500" src="https://avatars.githubusercontent.com/u/126121919?v=4">
+            <ul class="text-slate-950 dark:text-slate-200 flex items-center gap-[3vw] ml-auto mr-[4vw] ">
+                <li class="hover:shadow-[inset_0px_0px_4px_#334155] hover:-translate-y-0.5 duration-500 select-none w-20 h-8 py-1 text-center rounded-lg"><a href="./about">About</a></li>
+                <li class="hover:shadow-[inset_0px_0px_4px_#334155] hover:-translate-y-0.5 duration-500 select-none w-20 h-8 py-1 text-center rounded-lg"><a href="./projects">Projects</a></li>
+                <li class="hover:shadow-[inset_0px_0px_4px_#334155] hover:-translate-y-0.5 duration-500 select-none w-20 h-8 py-1 text-center rounded-lg"><a href="./links">Links</a></li>
+            </ul>
+        </nav>
+        <div class="flex mx-auto mt-[40vh]">
+            <div class="overflow-hidden h-8 sm:h-10 block">
+                <span class="text-2xl sm:text-3xl text-slate-950 dark:text-slate-200 mr-1">Hello, I'm</span>
+                <span class="text-2xl sm:text-3xl sm bg-gradient-to-r from-red-400 to-violet-500 bg-clip-text text-transparent inline-flex flex-col animate-textslide">
+                    <ul class="block text-left  leading-tight [&_li]:block">
+                        <li>Robert Zhao</li>
+                        <li>a Frontend Dev</li>
+                        <li>a Backend Dev</li>
+                        <li>a Video Editor</li>
+                        <li>a Gamer</li>
+                        <li>a Student</li>
+                        <li aria-hidden="true">Robert Zhao</li>
+                    </ul>
+                </span>
             </div>
         </div>
-
-        <div class="divider"></div>
-
-        <div class="content-platforms">
-            <h1>Platforms</h1>
-            <div class="content-platforms-github">
-                <img id="content-platforms-platform-icon" src="./images/github_logo.svg" width="50">
-                <span>Github • @deR0R0</span>
-            </div>
-            <div class="content-platforms-modrinth">
-                <img id="content-platforms-platform-icon" src="./images/modrinth_logo.svg" width="50">
-                <span>Modrinth • @deR0R0</span>
-            </div>
-            <div class="content-platforms-replit">
-                <img id="content-platforms-platform-icon" src="./images/replit_logo.svg" width="50">
-                <span>Replit • @deR0R0</span>
+        <div class="flex justify-center items-center">
+            <div class="text-sm sm:text-md text-slate-400 hover:-translate-y-0.5 duration-500">
+                <span><a href="./about">About</a></span>
+                <span>·</span>
+                <span><a href="./projects">Projects</a></span>
             </div>
         </div>
     </div>
-
-    <div class="watermark">Made with 💖 by Roro • <a style="color: var(--text)" target="_blank" rel="noopener noreferrer" href="https://github.com/deR0R0/der0r0.github.io">Source Code</a></div>
 </body>
 </html>
